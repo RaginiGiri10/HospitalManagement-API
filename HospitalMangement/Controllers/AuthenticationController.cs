@@ -94,6 +94,14 @@ namespace HospitalMangement.Controllers
                 });
 
             }
+            else if ((userExists != null && !await _userManager.CheckPasswordAsync(userExists, loginViewModel.Password)))
+            {
+                return StatusCode(500, new RegisterResponse
+                {
+                    IsRegistrationSuccessfull = false,
+                    Errors = new List<string> {"Invalid Credentials!"}
+                });
+            }
 
             return Unauthorized("Invalid Credentials");
         }
